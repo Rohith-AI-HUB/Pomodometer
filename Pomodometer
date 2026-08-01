@@ -6,7 +6,7 @@
       "id": "HS5wP",
       "x": 393,
       "y": 0,
-      "name": "2. Home Instrument",
+      "name": "1. Home Instrument",
       "clip": true,
       "width": 393,
       "height": 852,
@@ -104,45 +104,87 @@
                     },
                     {
                       "type": "frame",
-                      "id": "SWmor",
-                      "name": "Revision Tag",
-                      "fill": "$v2-paper",
-                      "cornerRadius": 999,
-                      "effect": {
-                        "type": "shadow",
-                        "shadowType": "outer",
-                        "color": "#0000000A",
-                        "offset": {
-                          "x": 0,
-                          "y": 1
-                        },
-                        "blur": 3
-                      },
-                      "gap": 6,
-                      "padding": [
-                        4,
-                        10
-                      ],
+                      "id": "HSU3M",
+                      "name": "Header Right Cluster",
+                      "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
                           "type": "frame",
-                          "id": "deIG5",
-                          "name": "Rev Dot",
-                          "width": 7,
-                          "height": 7,
-                          "fill": "#34C759",
-                          "cornerRadius": 999
+                          "id": "SWmor",
+                          "name": "Revision Tag",
+                          "fill": "$v2-paper",
+                          "cornerRadius": 999,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#0000000A",
+                            "offset": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "blur": 3
+                          },
+                          "gap": 6,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "deIG5",
+                              "name": "Rev Dot",
+                              "width": 7,
+                              "height": 7,
+                              "fill": "#34C759",
+                              "cornerRadius": 999
+                            },
+                            {
+                              "type": "text",
+                              "id": "XqlfW",
+                              "name": "Rev Label",
+                              "fill": "$v2-ink-soft",
+                              "content": "LOCK READY",
+                              "fontFamily": "$v2-font-ui",
+                              "fontSize": 10,
+                              "fontWeight": "normal"
+                            }
+                          ]
                         },
                         {
-                          "type": "text",
-                          "id": "XqlfW",
-                          "name": "Rev Label",
-                          "fill": "$v2-ink-soft",
-                          "content": "LOCK READY",
-                          "fontFamily": "$v2-font-ui",
-                          "fontSize": 10,
-                          "fontWeight": "normal"
+                          "type": "frame",
+                          "id": "D3SaKM",
+                          "name": "Setup Nav Button",
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$v2-paper",
+                          "cornerRadius": 18,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#0000000A",
+                            "offset": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "blur": 3
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "yOylF",
+                              "name": "Setup Nav Icon",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "settings",
+                              "library": "$icon-lib",
+                              "fill": "$v2-accent"
+                            }
+                          ]
                         }
                       ]
                     }
@@ -486,7 +528,7 @@
                       "id": "T1rwb",
                       "name": "Readout Unit",
                       "fill": "$v2-muted",
-                      "content": "LOCKED FOCUS · 25 MIN",
+                      "content": "FOCUS · CUSTOM MODE",
                       "fontFamily": "$v2-font-ui",
                       "fontSize": 9,
                       "fontWeight": "normal",
@@ -592,7 +634,7 @@
                       "id": "TIh4Q",
                       "name": "Mode Code 01",
                       "fill": "#DAD7FF",
-                      "content": "01",
+                      "content": "CUSTOM",
                       "fontFamily": "$v2-font-data",
                       "fontSize": 8,
                       "fontWeight": "normal",
@@ -630,8 +672,8 @@
                       "type": "text",
                       "id": "kIxgU",
                       "name": "Mode Code 02",
-                      "fill": "$v2-muted",
-                      "content": "02",
+                      "fill": "#9CA3AF",
+                      "content": "5 MIN",
                       "fontFamily": "$v2-font-data",
                       "fontSize": 8,
                       "fontWeight": "normal",
@@ -669,8 +711,8 @@
                       "type": "text",
                       "id": "u6CVlR",
                       "name": "Mode Code 03",
-                      "fill": "$v2-muted",
-                      "content": "03",
+                      "fill": "#9CA3AF",
+                      "content": "15 MIN",
                       "fontFamily": "$v2-font-data",
                       "fontSize": 8,
                       "fontWeight": "normal",
@@ -696,7 +738,7 @@
               "name": "Start CTA",
               "width": "fill_container",
               "height": 60,
-              "fill": "$v2-accent",
+              "fill": "#645cffff",
               "cornerRadius": 20,
               "stroke": "#00000000",
               "effect": {
@@ -879,6 +921,921 @@
                       "strokeWidth": 1
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "EZzc2",
+      "x": 866,
+      "y": 0,
+      "name": "Pomodometer App Icon",
+      "clip": true,
+      "width": 512,
+      "height": 512,
+      "fill": {
+        "type": "gradient",
+        "gradientType": "linear",
+        "enabled": true,
+        "rotation": 135,
+        "size": {
+          "height": 1
+        },
+        "colors": [
+          {
+            "color": "#FFFFFF",
+            "position": 0
+          },
+          {
+            "color": "#F4F6FF",
+            "position": 0.52
+          },
+          {
+            "color": "#E8E9FF",
+            "position": 1
+          }
+        ]
+      },
+      "cornerRadius": 116,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#0000001F",
+        "offset": {
+          "x": 0,
+          "y": 18
+        },
+        "blur": 42
+      },
+      "layout": "none",
+      "children": [
+        {
+          "type": "ellipse",
+          "id": "i8Faqg",
+          "x": 54,
+          "y": 48,
+          "name": "Icon Ambient Glow",
+          "fill": {
+            "type": "gradient",
+            "gradientType": "radial",
+            "enabled": true,
+            "rotation": 0,
+            "size": {
+              "width": 1,
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#635BFF24",
+                "position": 0
+              },
+              {
+                "color": "#635BFF00",
+                "position": 1
+              }
+            ]
+          },
+          "width": 404,
+          "height": 404
+        },
+        {
+          "type": "ellipse",
+          "id": "EGMNq",
+          "x": 98,
+          "y": 88,
+          "name": "Timer Track Ring",
+          "innerRadius": 0.84,
+          "fill": "#E6E9F2",
+          "width": 316,
+          "height": 316
+        },
+        {
+          "type": "ellipse",
+          "id": "xsynB",
+          "x": 98,
+          "y": 88,
+          "name": "Timer Progress Ring",
+          "innerRadius": 0.84,
+          "startAngle": 90,
+          "sweepAngle": -255,
+          "fill": "#635BFF",
+          "width": 316,
+          "height": 316
+        },
+        {
+          "type": "ellipse",
+          "id": "Ht5ck",
+          "x": 137,
+          "y": 127,
+          "name": "Timer Inner Plate",
+          "fill": "#FFFFFF",
+          "width": 238,
+          "height": 238,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#0000000F",
+            "offset": {
+              "x": 0,
+              "y": 6
+            },
+            "blur": 18
+          }
+        },
+        {
+          "type": "text",
+          "id": "GwVln",
+          "x": 162,
+          "y": 184,
+          "name": "Timer Number",
+          "fill": "#111827",
+          "textGrowth": "fixed-width-height",
+          "width": 188,
+          "height": 104,
+          "content": "25",
+          "textAlign": "center",
+          "textAlignVertical": "middle",
+          "fontFamily": "$v2-font-data",
+          "fontSize": 96,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "Ag0KC",
+          "x": 190,
+          "y": 286,
+          "name": "Timer Minute Label",
+          "fill": "#9CA3AF",
+          "textGrowth": "fixed-width-height",
+          "width": 132,
+          "height": 26,
+          "content": "FOCUS",
+          "textAlign": "center",
+          "textAlignVertical": "middle",
+          "fontFamily": "$v2-font-ui",
+          "fontSize": 18,
+          "fontWeight": "700",
+          "letterSpacing": 2
+        },
+        {
+          "type": "ellipse",
+          "id": "ALNhn",
+          "x": 352,
+          "y": 316,
+          "name": "Timer Handle",
+          "fill": "#FFFFFF",
+          "width": 34,
+          "height": 34,
+          "stroke": "#635BFF",
+          "strokeWidth": 7,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#635BFF59",
+            "offset": {
+              "x": 0,
+              "y": 6
+            },
+            "blur": 14
+          }
+        },
+        {
+          "type": "frame",
+          "id": "kMXa5",
+          "x": 312,
+          "y": 314,
+          "name": "Lock Badge",
+          "width": 126,
+          "height": 126,
+          "fill": "#111826ff",
+          "cornerRadius": 63,
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#11182740",
+            "offset": {
+              "x": 0,
+              "y": 12
+            },
+            "blur": 24
+          },
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "j5Tzy",
+              "name": "Lock Badge Icon",
+              "width": 56,
+              "height": 56,
+              "icon": "lock",
+              "library": "$icon-lib",
+              "fill": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "type": "ellipse",
+          "id": "Ty5aZ",
+          "x": 142,
+          "y": 132,
+          "name": "Icon Foreground Pulse",
+          "fill": "#FFFFFF33",
+          "width": 228,
+          "height": 228
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "z7MO0",
+      "x": 393,
+      "y": 978,
+      "name": "2. Setup & Permissions",
+      "clip": true,
+      "width": 393,
+      "height": 852,
+      "fill": "$v2-panel",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "jSXlI",
+          "name": "System Status Bar Area",
+          "width": 393,
+          "height": 62,
+          "fill": "$v2-panel"
+        },
+        {
+          "type": "frame",
+          "id": "GvTtP",
+          "name": "Instrument Content",
+          "width": 393,
+          "height": 790,
+          "fill": "$v2-panel",
+          "layout": "vertical",
+          "gap": 18,
+          "padding": [
+            16,
+            20,
+            28,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "u8yLIe",
+              "name": "Spec Header",
+              "width": 353,
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "Pxxfi",
+                  "name": "Wordmark Row",
+                  "width": 353,
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "quP47",
+                      "name": "Header Left Cluster",
+                      "gap": 10,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "i6brl",
+                          "name": "Brand Lockup",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "qIFBk",
+                              "name": "Brand Index Box",
+                              "width": 28,
+                              "height": 28,
+                              "fill": "$v2-accent",
+                              "cornerRadius": 10,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "iYi2v",
+                                  "name": "Brand Index",
+                                  "fill": "#FFFFFF",
+                                  "content": "P",
+                                  "fontFamily": "$v2-font-data",
+                                  "fontSize": 16,
+                                  "fontWeight": "700"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "text",
+                              "id": "ayPsA",
+                              "name": "Wordmark",
+                              "fill": "$v2-ink",
+                              "content": "POMODOMETER",
+                              "fontFamily": "$v2-font-data",
+                              "fontSize": 16,
+                              "fontWeight": "600"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "UKCgf",
+                      "name": "Header Right Cluster",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "b6nVl",
+                          "name": "Revision Tag",
+                          "fill": "$v2-paper",
+                          "cornerRadius": 999,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#0000000A",
+                            "offset": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "blur": 3
+                          },
+                          "gap": 6,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "b3clXb",
+                              "name": "Rev Dot",
+                              "width": 7,
+                              "height": 7,
+                              "fill": "#34C759",
+                              "cornerRadius": 999
+                            },
+                            {
+                              "type": "text",
+                              "id": "kXGW0",
+                              "name": "Rev Label",
+                              "fill": "$v2-ink-soft",
+                              "content": "LOCK READY",
+                              "fontFamily": "$v2-font-ui",
+                              "fontSize": 10,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "b4mVKz",
+                          "name": "Back Button",
+                          "width": 36,
+                          "height": 36,
+                          "fill": "$v2-paper",
+                          "cornerRadius": 18,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#0000000A",
+                            "offset": {
+                              "x": 0,
+                              "y": 1
+                            },
+                            "blur": 3
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "u39BB",
+                              "name": "Back Arrow Icon",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "arrow_back",
+                              "library": "$icon-lib",
+                              "fill": "$v2-ink"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "Q2HXbK",
+                  "name": "Header Rule",
+                  "fill": "$v2-hairline",
+                  "width": 353,
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "q9UeOV",
+                  "name": "Spec Subrow",
+                  "width": 353,
+                  "height": 14,
+                  "justifyContent": "space_between",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "PcGbC",
+                      "name": "Spec Sub Left",
+                      "fill": "$v2-ink-soft",
+                      "content": "One-time setup",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "wk8I3",
+                      "name": "Spec Sub Right",
+                      "fill": "$v2-muted",
+                      "content": "3 steps",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MCWWG",
+              "name": "Fig Label",
+              "width": 353,
+              "height": 18,
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "DF7SD",
+                  "name": "Fig Caption",
+                  "fill": "$v2-ink-soft",
+                  "content": "Enable locking so sessions work on your phone",
+                  "fontFamily": "$v2-font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "N26zS2",
+              "name": "Setup Steps Card",
+              "width": 353,
+              "height": 194,
+              "fill": "$v2-paper",
+              "cornerRadius": 28,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#00000012",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 24
+              },
+              "layout": "vertical",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "EuIdn",
+                  "name": "Step 1",
+                  "width": 353,
+                  "height": 64,
+                  "gap": 12,
+                  "padding": [
+                    14,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "IOoE3",
+                      "name": "Step Chip 1",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "$v2-accent",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "twMgQ",
+                          "name": "Step Number 1",
+                          "fill": "#FFFFFF",
+                          "content": "1",
+                          "fontFamily": "$v2-font-data",
+                          "fontSize": 10,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Rynwp",
+                      "name": "Step Text 1",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "UnxXK",
+                          "name": "Step Title 1",
+                          "fill": "$v2-ink",
+                          "content": "Allow notifications",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "Yglvb",
+                          "name": "Step Sub 1",
+                          "fill": "$v2-ink-soft",
+                          "content": "Session alerts and timer updates",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "icon",
+                      "id": "u3ugee",
+                      "name": "Step Chevron 1",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron_right",
+                      "library": "$icon-lib",
+                      "fill": "$v2-muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "h8zUUb",
+                  "name": "Step Divider 1",
+                  "fill": "$v2-hairline",
+                  "width": 321,
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "noEJ1",
+                  "name": "Step 2",
+                  "width": 353,
+                  "height": 64,
+                  "gap": 12,
+                  "padding": [
+                    14,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "dwbqb",
+                      "name": "Step Chip 2",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "$v2-accent",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "d65R7",
+                          "name": "Step Number 2",
+                          "fill": "#FFFFFF",
+                          "content": "2",
+                          "fontFamily": "$v2-font-data",
+                          "fontSize": 10,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "PZP8X",
+                      "name": "Step Text 2",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "jTbjb",
+                          "name": "Step Title 2",
+                          "fill": "$v2-ink",
+                          "content": "Disable battery optimization",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "vuEmY",
+                          "name": "Step Sub 2",
+                          "fill": "$v2-ink-soft",
+                          "content": "Keeps the timer alive when the screen is off",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "icon",
+                      "id": "gsHTP",
+                      "name": "Step Chevron 2",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron_right",
+                      "library": "$icon-lib",
+                      "fill": "$v2-muted"
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "MvJEh",
+                  "name": "Step Divider 2",
+                  "fill": "$v2-hairline",
+                  "width": 321,
+                  "height": 1
+                },
+                {
+                  "type": "frame",
+                  "id": "klwgb",
+                  "name": "Step 3",
+                  "width": 353,
+                  "height": 64,
+                  "gap": 12,
+                  "padding": [
+                    14,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "rKV3S",
+                      "name": "Step Chip 3",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "$v2-accent",
+                      "cornerRadius": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "y2EYv",
+                          "name": "Step Number 3",
+                          "fill": "#FFFFFF",
+                          "content": "3",
+                          "fontFamily": "$v2-font-data",
+                          "fontSize": 10,
+                          "fontWeight": "600"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "KD85k",
+                      "name": "Step Text 3",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 2,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "tQIEu",
+                          "name": "Step Title 3",
+                          "fill": "$v2-ink",
+                          "content": "Enable screen pinning",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "TAsTv",
+                          "name": "Step Sub 3",
+                          "fill": "$v2-ink-soft",
+                          "content": "Opens system settings once",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 11,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "icon",
+                      "id": "BXn9Y",
+                      "name": "Step Chevron 3",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron_right",
+                      "library": "$icon-lib",
+                      "fill": "$v2-muted"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "goDcq",
+              "name": "Strict Mode Card",
+              "width": 353,
+              "height": 76,
+              "fill": "$v2-paper",
+              "cornerRadius": 28,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#00000012",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 24
+              },
+              "gap": 12,
+              "padding": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "neNl4",
+                  "name": "Strict Text",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "mBqZf",
+                      "name": "Strict Title",
+                      "fill": "$v2-ink",
+                      "content": "Strict mode (device owner)",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "eUDBy",
+                      "name": "Strict Sub",
+                      "fill": "$v2-ink-soft",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Requires ADB setup · not recommended on daily driver",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "R3VaM",
+                  "name": "Toggle Off",
+                  "width": 44,
+                  "height": 24,
+                  "fill": "#E5E7EB",
+                  "cornerRadius": 999,
+                  "padding": 2,
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "OQPNF",
+                      "name": "Toggle Knob",
+                      "fill": "#FFFFFF",
+                      "width": 20,
+                      "height": 20
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "na9nz",
+              "name": "Start CTA",
+              "width": 353,
+              "height": 60,
+              "fill": "$v2-accent",
+              "cornerRadius": 20,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#635BFF3D",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 18
+              },
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "yAALA",
+                  "name": "Play Icon",
+                  "width": 28,
+                  "height": 28,
+                  "icon": "play_arrow",
+                  "library": "$icon-lib",
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "text",
+                  "id": "CNxTp",
+                  "name": "CTA Label",
+                  "fill": "#FFFFFF",
+                  "content": "Enable Screen Pinning",
+                  "fontFamily": "$v2-font-ui",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "moHFY",
+              "name": "Note Row",
+              "width": "fill_container",
+              "height": 36,
+              "fill": "$v2-paper",
+              "cornerRadius": 18,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#0000000A",
+                "offset": {
+                  "x": 0,
+                  "y": 2
+                },
+                "blur": 8
+              },
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "SAtDo",
+                  "name": "Setup Lock Note Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "lock",
+                  "library": "$icon-lib",
+                  "fill": "$v2-accent"
+                },
+                {
+                  "type": "text",
+                  "id": "hgBez",
+                  "name": "Note Text",
+                  "fill": "$v2-muted",
+                  "content": "Calls will still work during sessions",
+                  "fontFamily": "$v2-font-ui",
+                  "fontSize": 11,
+                  "fontWeight": "normal"
                 }
               ]
             }

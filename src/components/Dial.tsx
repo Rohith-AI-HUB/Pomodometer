@@ -12,7 +12,7 @@ import Svg, { Circle } from "react-native-svg";
 import { colors, fonts, radii, shadows } from "../theme";
 import { useScale } from "../scale";
 import { MaterialIcons } from "./icons";
-import { DIAL_LABEL_MODE } from "../config";
+import { DIAL_SEQUENCE, minutesFor, nextInSequence, sequenceAngle } from "../config";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -28,10 +28,6 @@ const TICK_R = 130;
 const LABEL_R = 146;
 const EXTENT = 136;
 
-const MIN_MIN = 5;
-const MAX_MIN = 60;
-const RANGE = MAX_MIN - MIN_MIN;
-
 const CIRC = 2 * Math.PI * RING_R;
 
 const BUTTON_D = 44;
@@ -40,25 +36,30 @@ const BUTTON_GAP = 14;
 const TICK_ANGLES = Array.from({ length: 12 }, (_, i) => i * 30);
 
 export function fractionFromMinutes(min: number): number {
-  return Math.min(Math.max((min - MIN_MIN) / RANGE, 0), 1);
+  // 60-minute clock: the handle angle is proportional to the clock value,
+  // and 0 ≡ 60 (both sit at the top of the clock).
+  return Math.min(Math.max((min % 60) / 60, 0), 1);
 }
 
 export function minutesFromFraction(f: number): number {
-  return Math.round(MIN_MIN + f * RANGE);
+  const angle = (((f % 1) + 1) % 1) * 360;
+  let best = DIAL_SEQUENCE[0];
+  let bestDist = Infinity;
+  for (const v of DIAL_SEQUENCE) {
+    const target = sequenceAngle(v);
+    const d = Math.min(Math.abs(angle - target), 360 - Math.abs(angle - target));
+    if (d < bestDist) {
+      bestDist = d;
+      best = v;
+    }
+  }
+  return minutesFor(best);
 }
 
-const LABELS: { text: string; angle: number }[] =
-  DIAL_LABEL_MODE === "minutes"
-    ? [0, 90, 180, 270].map((angle) => ({
-        text: String(minutesFromFraction(angle / 360)),
-        angle,
-      }))
-    : [
-        { text: "12", angle: 0 },
-        { text: "15", angle: 90 },
-        { text: "30", angle: 180 },
-        { text: "45", angle: 270 },
-      ];
+const LABELS: { text: string; angle: number }[] = DIAL_SEQUENCE.map((v) => ({
+  text: String(v),
+  angle: sequenceAngle(v),
+}));
 
 function polar(angleDeg: number, radius: number): { x: number; y: number } {
   const a = (angleDeg * Math.PI) / 180;
@@ -81,17 +82,20 @@ interface Props {
   readout: string;
   unit: string;
   minutes: number;
+  /** 0..1 override for the ring/handle while a session is running or complete. */
+  progressFraction?: number;
   onDragMinutes?: (min: number) => void;
-  onStep?: (delta: number) => void;
+  onStep?: (min: number) => void;
   locked?: boolean;
   paused?: boolean;
 }
 
-export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, paused }: Props) {
+export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, onStep, locked, paused }: Props) {
   const S = useScale();
   const draggingRef = useRef(false);
 
-  const f0 = fractionFromMinutes(minutes);
+  const target = progressFraction != null ? Math.min(Math.max(progressFraction, 0), 1) : fractionFromMinutes(minutes);
+  const f0 = target;
   const a0 = f0 * 2 * Math.PI;
   const progress = useRef(new Animated.Value(f0)).current;
   const handleXY = useRef(
@@ -156,12 +160,13 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
   useEffect(() => {
     if (draggingRef.current) return;
     Animated.timing(progress, {
-      toValue: fractionFromMinutes(minutes),
+      toValue:
+        progressFraction != null ? Math.min(Math.max(progressFraction, 0), 1) : fractionFromMinutes(minutes),
       duration: 380,
       easing: Easing.out(Easing.cubic),
       useNativeDriver: false,
     }).start();
-  }, [minutes, progress]);
+  }, [minutes, progressFraction, progress]);
 
   useEffect(() => {
     Animated.sequence([
@@ -257,7 +262,9 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
               { left: (p.x - 20) * S, top: (p.y - 11) * S, width: 40 * S, height: 22 * S },
             ]}
           >
-            <Text style={[styles.labelText, { fontSize: 12 * S }]}>{l.text}</Text>
+            <Text allowFontScaling={false} style={[styles.labelText, { fontSize: 12 * S }]}>
+              {l.text}
+            </Text>
           </View>
         );
       })}
@@ -284,8 +291,8 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
 
       {onStep && (
         <>
-          <StepButton icon="remove" onPress={() => onStep(-5)} position="left" />
-          <StepButton icon="add" onPress={() => onStep(5)} position="right" />
+          <StepButton icon="remove" onPress={() => onStep(nextInSequence(minutes, -1))} position="left" />
+          <StepButton icon="add" onPress={() => onStep(nextInSequence(minutes, 1))} position="right" />
         </>
       )}
 
@@ -297,7 +304,7 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
       )}
 
       {paused && (
-        <View style={[styles.pausedWrap, { top: 88 * S }]} pointerEvents="none">
+        <View style={[styles.pausedWrap, { top: 88 * S, width: CARD_W * S }]} pointerEvents="none">
           <View style={[styles.pausedBadge, { paddingHorizontal: 9 * S, paddingVertical: 3 * S }]}>
             <Text style={[styles.pausedText, { fontSize: 8 * S }]}>PAUSED · CALL IN PROGRESS</Text>
           </View>
@@ -309,6 +316,7 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
           styles.readoutValue,
           {
             top: 120 * S,
+            height: 80 * S,
             left: (CX - (RING_R - RING_STROKE)) * S,
             width: (RING_R - RING_STROKE) * 2 * S,
             transform: [{ scale: readoutAnim }],
@@ -325,7 +333,10 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
           {readout}
         </Text>
       </Animated.View>
-      <Text style={[styles.readoutUnit, { top: 204 * S, fontSize: 10 * S, letterSpacing: 1.5 * S }]}>
+      <Text
+        allowFontScaling={false}
+        style={[styles.readoutUnit, { top: 204 * S, width: CARD_W * S, fontSize: 10 * S, letterSpacing: 1.5 * S }]}
+      >
         {unit}
       </Text>
     </View>
@@ -442,6 +453,8 @@ const styles = StyleSheet.create({
     fontFamily: fonts.dataSemiBold,
     fontWeight: "600",
     color: colors.inkSoft,
+    includeFontPadding: false,
+    textAlignVertical: "center",
   },
   readoutValue: {
     position: "absolute",
@@ -449,20 +462,21 @@ const styles = StyleSheet.create({
     width: CARD_W,
     alignItems: "center",
     justifyContent: "center",
-    height: 80,
   },
   readoutText: {
     fontFamily: fonts.dataBold,
     fontWeight: "700",
     color: colors.ink,
-    lineHeight: 80,
+    includeFontPadding: false,
+    textAlignVertical: "center",
   },
   readoutUnit: {
     position: "absolute",
     left: 0,
-    width: CARD_W,
     textAlign: "center",
     fontFamily: fonts.data,
     color: colors.muted,
+    includeFontPadding: false,
+    textAlignVertical: "center",
   },
 });

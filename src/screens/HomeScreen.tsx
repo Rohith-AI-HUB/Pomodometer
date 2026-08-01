@@ -28,6 +28,9 @@ const MODE_LABEL: Record<SessionMode, string> = {
 export function HomeScreen({ onOpenSetup, session }: Props) {
   const S = useScale();
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Guards against the release of the hold gesture being interpreted as a tap
+  // on the (newly rendered) Start button right after the session ends.
+  const suppressStartUntil = useRef(0);
 
   const { phase, mode, durationMin, remainingSec, totalSec, streakDone, nextMode, countdown, canLock } = session;
 
@@ -44,7 +47,6 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
     : mode === "focus"
       ? "FOCUS · CUSTOM MODE"
       : `${MODE_LABEL[mode].toUpperCase()} · BREAK`;
-  const frac = running || complete ? remainingSec / totalSec : (durationMin - 5) / 55;
 
   const lockedNow = running && mode === "focus" && canLock;
   const caption = counting
@@ -73,6 +75,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
     if (!running) return;
     Vibration.vibrate(30);
     holdTimer.current = setTimeout(() => {
+      suppressStartUntil.current = Date.now() + 600;
       session.end();
     }, HOLD_MS);
   };
@@ -103,9 +106,10 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
         <Dial
           readout={readout}
           unit={unit}
-          minutes={running ? 5 + frac * 55 : durationMin}
+          minutes={durationMin}
+          progressFraction={running || complete ? remainingSec / totalSec : undefined}
           onDragMinutes={running || complete ? undefined : session.setDuration}
-          onStep={running || complete ? undefined : (d) => session.setDuration(durationMin + d)}
+          onStep={running || complete ? undefined : session.setDuration}
           locked={running}
           paused={paused}
         />
@@ -116,6 +120,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
         />
         {running ? (
           <PrimaryCTA
+            key="stop"
             label={mode === "focus" ? "Hold 3s to End Session" : "Hold 3s to End Break"}
             icon="stop"
             color="accent2"
@@ -123,12 +128,16 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
             onPressOut={holdCancel}
           />
         ) : counting ? (
-          <PrimaryCTA label={`Skip · ${MODE_LABEL[nextMode!]}`} icon="stop" color="accent2" onPress={session.skipNext} />
+          <PrimaryCTA key="skip" label={`Skip · ${MODE_LABEL[nextMode!]}`} icon="stop" color="accent2" onPress={session.skipNext} />
         ) : (
           <PrimaryCTA
+            key="start"
             label={complete ? "Start Next Session" : "Start Focus Session"}
             icon="play-arrow"
-            onPress={() => void session.start()}
+            onPress={() => {
+              if (Date.now() < suppressStartUntil.current) return;
+              void session.start();
+            }}
           />
         )}
         <LockNote

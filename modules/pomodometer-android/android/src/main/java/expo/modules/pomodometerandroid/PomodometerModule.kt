@@ -75,7 +75,32 @@ class PomodometerModule : Module() {
     }
 
     Function("startLock") {
-      launchLockActivity(LockActivity.ACTION_START_LOCK)
+      val activity = appContext.currentActivity
+      if (activity != null) {
+        // The app is foregrounded: pin the activity that is actually on screen.
+        // Lock task mode is bound to the task the calling activity belongs to,
+        // so it must be applied to the real UI activity — a transient helper
+        // task that immediately finishes would be torn down (lock released)
+        // before the pin ever shows.
+        Handler(Looper.getMainLooper()).post { tryStartLockTask(retries = 5) }
+      } else {
+        // The app is in the background (e.g. a focus session auto-started from
+        // the countdown). Bring the app's real UI forward first, then pin as
+        // soon as an activity is resumed.
+        val ctx = appContext.reactContext
+        if (ctx != null) {
+          try {
+            val launch = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)
+            if (launch != null) {
+              launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+              ctx.startActivity(launch)
+            }
+          } catch (_: Exception) {
+            // ignore
+          }
+        }
+        Handler(Looper.getMainLooper()).post { tryStartLockTask(retries = 20) }
+      }
       Unit
     }
 
@@ -236,6 +261,29 @@ class PomodometerModule : Module() {
     val ctx = appContext.reactContext ?: return false
     val am = ctx.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
     return am != null && am.lockTaskModeState != ActivityManager.LOCK_TASK_MODE_NONE
+  }
+
+  /**
+   * Attempts to put the currently visible activity into lock task mode, retrying
+   * briefly in case the activity is still resuming (e.g. right after the app was
+   * brought to the foreground). Stops once lock task mode engages, or after the
+   * retry budget is exhausted, or if the platform rejects the request.
+   */
+  private fun tryStartLockTask(retries: Int) {
+    if (retries <= 0 || isInLockTaskMode()) return
+    val activity = appContext.currentActivity
+    if (activity == null) {
+      Handler(Looper.getMainLooper()).postDelayed({ tryStartLockTask(retries - 1) }, 120)
+      return
+    }
+    try {
+      activity.startLockTask()
+    } catch (_: SecurityException) {
+      // Lock task mode / screen pinning not permitted on this device.
+      return
+    }
+    // The lock task mode state may lag by a frame; re-check before giving up.
+    Handler(Looper.getMainLooper()).postDelayed({ tryStartLockTask(retries - 1) }, 120)
   }
 
   private fun startObserving() {

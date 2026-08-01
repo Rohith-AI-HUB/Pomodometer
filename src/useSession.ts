@@ -3,6 +3,7 @@ import { AppState } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pomodometer } from "./native/pomodometer";
 import { ensurePhoneStatePermission } from "./permissions";
+import { snapToSequence } from "./config";
 import type { SessionMode } from "./components/ModeSelector";
 
 export type Phase = "idle" | "running" | "paused" | "complete";
@@ -10,6 +11,7 @@ export type Phase = "idle" | "running" | "paused" | "complete";
 const STREAK_KEY = "pomodometer:streak";
 export const STREAK_TARGET = 4;
 export const AUTO_COUNTDOWN_SECONDS = 5;
+// Dial value 0 ≡ 60 minutes on the 60-minute clock framework.
 const MODE_MINUTES: Record<SessionMode, number> = { focus: 25, short: 5, long: 15 };
 
 interface Streak {
@@ -146,13 +148,19 @@ export function useSession() {
         setPhase("idle");
         return;
       }
+      // Read the native state synchronously rather than relying on the
+      // (possibly stale) `canLock` state: the user may have just toggled
+      // strict mode in Setup, and `canLock` is only refreshed on mount or
+      // when the app returns to the foreground.
+      const lockReady = pomodometer.isDeviceOwner() && pomodometer.isStrictEnabled();
+      setCanLock(lockReady);
       pomodometer.startTimer(total, mo.toUpperCase());
-      if (mo === "focus" && canLock) {
+      if (mo === "focus" && lockReady) {
         pomodometer.startLock();
       }
       setPhase("running");
     },
-    [durationMin, mode, canLock]
+    [durationMin, mode]
   );
 
   useEffect(() => {
@@ -189,7 +197,7 @@ export function useSession() {
   }, []);
 
   const setDuration = useCallback((min: number) => {
-    setDurationMin(Math.min(Math.max(min, 5), 60));
+    setDurationMin(snapToSequence(min));
   }, []);
 
   return {

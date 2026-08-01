@@ -1,0 +1,80 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:1:1-35:12
+INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:1:1-35:12
+	package
+		INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:3:3-75
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:3:20-72
+uses-permission#android.permission.FOREGROUND_SERVICE_SPECIAL_USE
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:4:3-87
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:4:20-84
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:5:3-75
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:5:20-72
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:6:3-73
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:6:20-70
+uses-permission#android.permission.WAKE_LOCK
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:7:3-66
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:7:20-63
+uses-permission#android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:8:3-93
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:8:20-90
+application
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:10:3-34:17
+service#expo.modules.pomodometerandroid.PomodometerService
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:11:5-18:15
+	android:exported
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:13:7-31
+	android:foregroundServiceType
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:14:7-49
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:12:7-41
+property#android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:15:7-17:57
+	android:value
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:17:9-54
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:16:9-68
+activity#expo.modules.pomodometerandroid.LockActivity
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:20:5-24:69
+	android:launchMode
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:23:7-38
+	android:exported
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:22:7-31
+	android:theme
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:24:7-66
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:21:7-35
+receiver#expo.modules.pomodometerandroid.PomodometerDeviceAdminReceiver
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:26:5-33:16
+	android:exported
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:28:7-30
+	android:permission
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:29:7-64
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:27:7-53
+meta-data#android.app.device_admin
+ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:30:7-32:60
+	android:resource
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:32:9-57
+	android:name
+		ADDED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:31:9-48
+uses-sdk
+INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml
+INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml

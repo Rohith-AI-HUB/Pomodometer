@@ -5,6 +5,7 @@ node_modules/
 
 # Expo
 .expo/
+.expo-shared/
 dist/
 web-build/
 expo-env.d.ts
@@ -22,9 +23,11 @@ expo-env.d.ts
 .metro-health-check*
 
 # debug
+*.log
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+pnpm-debug.log*
 
 # macOS
 .DS_Store
@@ -35,6 +38,12 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+*.lcov
+coverage/
+.eslintcache
+.turbo/
+.parcel-cache/
+.cache/
 
 # generated native folders
 /ios

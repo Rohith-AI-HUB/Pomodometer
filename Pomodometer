@@ -1,0 +1,1013 @@
+{
+  "version": "2.14",
+  "children": [
+    {
+      "type": "frame",
+      "id": "HS5wP",
+      "x": 393,
+      "y": 0,
+      "name": "2. Home Instrument",
+      "clip": true,
+      "width": 393,
+      "height": 852,
+      "fill": "$v2-panel",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "du7fc",
+          "name": "System Status Bar Area",
+          "width": "fill_container",
+          "height": 62,
+          "fill": "$v2-panel",
+          "padding": [
+            0,
+            20
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center"
+        },
+        {
+          "type": "frame",
+          "id": "V1aXr",
+          "name": "Instrument Content",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "$v2-panel",
+          "layout": "vertical",
+          "gap": 18,
+          "padding": [
+            16,
+            20,
+            28,
+            20
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "qU58U",
+              "name": "Spec Header",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "DD0Dp",
+                  "name": "Wordmark Row",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "Xy8Xm",
+                      "name": "Brand Lockup",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "MzMOa",
+                          "name": "Brand Index Box",
+                          "width": 28,
+                          "height": 28,
+                          "fill": "$v2-accent",
+                          "cornerRadius": 10,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "Sb14t",
+                              "name": "Brand Index",
+                              "fill": "#FFFFFF",
+                              "content": "P",
+                              "fontFamily": "$v2-font-data",
+                              "fontSize": 16,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "cZQJ8",
+                          "name": "Wordmark",
+                          "fill": "$v2-ink",
+                          "content": "POMODOMETER",
+                          "fontFamily": "$v2-font-data",
+                          "fontSize": 16,
+                          "fontWeight": "600",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "SWmor",
+                      "name": "Revision Tag",
+                      "fill": "$v2-paper",
+                      "cornerRadius": 999,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#0000000A",
+                        "offset": {
+                          "x": 0,
+                          "y": 1
+                        },
+                        "blur": 3
+                      },
+                      "gap": 6,
+                      "padding": [
+                        4,
+                        10
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "deIG5",
+                          "name": "Rev Dot",
+                          "width": 7,
+                          "height": 7,
+                          "fill": "#34C759",
+                          "cornerRadius": 999
+                        },
+                        {
+                          "type": "text",
+                          "id": "XqlfW",
+                          "name": "Rev Label",
+                          "fill": "$v2-ink-soft",
+                          "content": "LOCK READY",
+                          "fontFamily": "$v2-font-ui",
+                          "fontSize": 10,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "V6t3Tm",
+                  "name": "Header Rule",
+                  "width": "fill_container",
+                  "height": 1,
+                  "fill": "#E5E7EB"
+                },
+                {
+                  "type": "frame",
+                  "id": "I5srbE",
+                  "name": "Spec Subrow",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "M3ov5",
+                      "name": "Spec Sub Left",
+                      "fill": "$v2-ink-soft",
+                      "content": "Focus session setup",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Xa5IU",
+                      "name": "Spec Sub Right",
+                      "fill": "$v2-muted",
+                      "content": "25 min target",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sBLy8",
+              "name": "Fig Label",
+              "width": "fill_container",
+              "height": 18,
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ik5Sq",
+                  "name": "Fig Caption",
+                  "fill": "$v2-ink-soft",
+                  "content": "Drag the ring to adjust duration",
+                  "fontFamily": "$v2-font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "WZN9Y",
+              "name": "Instrument Dial",
+              "width": "fill_container",
+              "height": 320,
+              "fill": "$v2-paper",
+              "cornerRadius": 28,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#00000016",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 24
+              },
+              "layout": "none",
+              "children": [
+                {
+                  "type": "ellipse",
+                  "id": "wHMaC",
+                  "x": 60,
+                  "y": 38,
+                  "name": "Premium Dial Glow",
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "radial",
+                    "enabled": true,
+                    "rotation": 0,
+                    "size": {
+                      "width": 1,
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#635BFF14",
+                        "position": 0
+                      },
+                      {
+                        "color": "#635BFF00",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 233,
+                  "height": 233
+                },
+                {
+                  "type": "rectangle",
+                  "id": "grn6Y",
+                  "x": 10,
+                  "y": 159.5,
+                  "name": "Guide Line H",
+                  "fill": "#635BFF0F",
+                  "width": 333,
+                  "height": 1
+                },
+                {
+                  "type": "rectangle",
+                  "id": "hLfj2",
+                  "x": 175.5,
+                  "y": 10,
+                  "name": "Guide Line V",
+                  "fill": "#635BFF0F",
+                  "width": 1,
+                  "height": 300
+                },
+                {
+                  "type": "ellipse",
+                  "id": "VMPm4",
+                  "x": 36.5,
+                  "y": 20,
+                  "name": "Dial Bezel",
+                  "innerRadius": 0.97,
+                  "fill": "#00000000",
+                  "width": 280,
+                  "height": 280,
+                  "stroke": "#E5E7EB",
+                  "strokeWidth": 1
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ZNtGD",
+                  "x": 36.5,
+                  "y": 20,
+                  "name": "Dial Track",
+                  "innerRadius": 0.91,
+                  "fill": "#EEF1F6",
+                  "width": 280,
+                  "height": 280
+                },
+                {
+                  "type": "ellipse",
+                  "id": "Amrt3",
+                  "x": 36.5,
+                  "y": 20,
+                  "name": "Progress Arc",
+                  "innerRadius": 0.91,
+                  "startAngle": 90,
+                  "sweepAngle": -150,
+                  "fill": "$v2-accent",
+                  "width": 280,
+                  "height": 280
+                },
+                {
+                  "type": "ellipse",
+                  "id": "oJ1Jc",
+                  "x": 173,
+                  "y": 30.5,
+                  "name": "Tick Dot T0",
+                  "fill": "$v2-accent",
+                  "width": 7,
+                  "height": 7
+                },
+                {
+                  "type": "ellipse",
+                  "id": "cLoZm",
+                  "x": 237,
+                  "y": 48.38079912316073,
+                  "name": "Tick Dot 1",
+                  "fill": "$v2-accent",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "ZSJ6h",
+                  "x": 283.1192008768393,
+                  "y": 94.49999999999999,
+                  "name": "Tick Dot 2",
+                  "fill": "$v2-accent",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "GOIF1",
+                  "x": 299,
+                  "y": 156.5,
+                  "name": "Tick Dot R3",
+                  "fill": "$v2-accent",
+                  "width": 7,
+                  "height": 7
+                },
+                {
+                  "type": "ellipse",
+                  "id": "pQkDJ",
+                  "x": 283.1192008768393,
+                  "y": 220.49999999999997,
+                  "name": "Tick Dot 4",
+                  "fill": "$v2-accent",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "sq3A4",
+                  "x": 237,
+                  "y": 266.6192008768393,
+                  "name": "Tick Dot 5",
+                  "fill": "$v2-accent",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "HmaM8",
+                  "x": 173.00000000000003,
+                  "y": 282.5,
+                  "name": "Tick Dot B6",
+                  "fill": "$v2-tick",
+                  "width": 7,
+                  "height": 7
+                },
+                {
+                  "type": "ellipse",
+                  "id": "YM7Na",
+                  "x": 110.99999999999999,
+                  "y": 266.6192008768393,
+                  "name": "Tick Dot 7",
+                  "fill": "$v2-tick",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "F6UpyT",
+                  "x": 64.88079912316076,
+                  "y": 220.50000000000006,
+                  "name": "Tick Dot 8",
+                  "fill": "$v2-tick",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "d9SZj",
+                  "x": 47,
+                  "y": 156.50000000000003,
+                  "name": "Tick Dot L9",
+                  "fill": "$v2-tick",
+                  "width": 7,
+                  "height": 7
+                },
+                {
+                  "type": "ellipse",
+                  "id": "YmVkJ",
+                  "x": 64.88079912316074,
+                  "y": 94.49999999999999,
+                  "name": "Tick Dot 10",
+                  "fill": "$v2-tick",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "hKdDy",
+                  "x": 110.99999999999994,
+                  "y": 48.38079912316077,
+                  "name": "Tick Dot 11",
+                  "fill": "$v2-tick",
+                  "width": 5,
+                  "height": 5
+                },
+                {
+                  "type": "ellipse",
+                  "id": "o31Dyd",
+                  "x": 226,
+                  "y": 253,
+                  "name": "Duration Handle",
+                  "fill": "#FFFFFF",
+                  "width": 18,
+                  "height": 18,
+                  "stroke": "$v2-accent",
+                  "strokeWidth": 4,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#635BFF4D",
+                    "offset": {
+                      "x": 0,
+                      "y": 3
+                    },
+                    "blur": 8
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "SHH9b",
+                  "x": 76.5,
+                  "y": 108,
+                  "name": "Readout Block",
+                  "width": 200,
+                  "height": 104,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wheWy",
+                      "name": "Readout Value",
+                      "fill": "$v2-ink",
+                      "content": "25:00",
+                      "fontFamily": "$v2-font-data",
+                      "fontSize": 58,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "T1rwb",
+                      "name": "Readout Unit",
+                      "fill": "$v2-muted",
+                      "content": "LOCKED FOCUS · 25 MIN",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "myUcR",
+                  "x": 173,
+                  "y": 0,
+                  "name": "Scale Label 0",
+                  "fill": "$v2-ink-soft",
+                  "content": "0",
+                  "textAlign": "center",
+                  "fontFamily": "$v2-font-data",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "kgyYy",
+                  "x": 323,
+                  "y": 154,
+                  "name": "Scale Label 15",
+                  "fill": "$v2-ink-soft",
+                  "content": "15",
+                  "textAlign": "center",
+                  "fontFamily": "$v2-font-data",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "IW5IV",
+                  "x": 169,
+                  "y": 304,
+                  "name": "Scale Label 30",
+                  "fill": "$v2-ink-soft",
+                  "content": "30",
+                  "textAlign": "center",
+                  "fontFamily": "$v2-font-data",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "pxCEG",
+                  "x": 20,
+                  "y": 154,
+                  "name": "Scale Label 45",
+                  "fill": "$v2-ink-soft",
+                  "content": "45",
+                  "textAlign": "center",
+                  "fontFamily": "$v2-font-data",
+                  "fontSize": 11,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wwqKz",
+              "name": "Mode Selector",
+              "width": "fill_container",
+              "height": 56,
+              "fill": "$v2-paper",
+              "cornerRadius": 20,
+              "stroke": "$v2-hairline",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#0000000A",
+                "offset": {
+                  "x": 0,
+                  "y": 2
+                },
+                "blur": 8
+              },
+              "gap": 4,
+              "padding": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "gKsjF",
+                  "name": "Mode 01",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "$v2-accent",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": [
+                    0,
+                    8
+                  ],
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "TIh4Q",
+                      "name": "Mode Code 01",
+                      "fill": "#DAD7FF",
+                      "content": "01",
+                      "fontFamily": "$v2-font-data",
+                      "fontSize": 8,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "AFQeW",
+                      "name": "Mode Label 01",
+                      "fill": "#FFFFFF",
+                      "content": "FOCUS",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "CoD6t",
+                  "name": "Mode 02",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#00000000",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": [
+                    0,
+                    8
+                  ],
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "kIxgU",
+                      "name": "Mode Code 02",
+                      "fill": "$v2-muted",
+                      "content": "02",
+                      "fontFamily": "$v2-font-data",
+                      "fontSize": 8,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "Kdbcw",
+                      "name": "Mode Label 02",
+                      "fill": "$v2-ink-soft",
+                      "content": "SHORT BREAK",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Y0uG2g",
+                  "name": "Mode 03",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "fill": "#00000000",
+                  "cornerRadius": 16,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": [
+                    0,
+                    8
+                  ],
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "u6CVlR",
+                      "name": "Mode Code 03",
+                      "fill": "$v2-muted",
+                      "content": "03",
+                      "fontFamily": "$v2-font-data",
+                      "fontSize": 8,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "TSW9y",
+                      "name": "Mode Label 03",
+                      "fill": "$v2-ink-soft",
+                      "content": "LONG BREAK",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 11,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mxDSs",
+              "name": "Start CTA",
+              "width": "fill_container",
+              "height": 60,
+              "fill": "$v2-accent",
+              "cornerRadius": 20,
+              "stroke": "#00000000",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#635BFF3D",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 18
+              },
+              "gap": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "moenF",
+                  "name": "Play Icon",
+                  "width": 32,
+                  "height": 32,
+                  "icon": "play_arrow",
+                  "library": "$icon-lib",
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "text",
+                  "id": "AOQUD",
+                  "name": "CTA Label",
+                  "fill": "#FFFFFF",
+                  "content": "Start Focus Session",
+                  "fontFamily": "$v2-font-ui",
+                  "fontSize": 16,
+                  "fontWeight": "700"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "Q0ahg",
+              "name": "Lock Note",
+              "width": "fill_container",
+              "height": 36,
+              "fill": "$v2-paper",
+              "cornerRadius": 17,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#00000008",
+                "offset": {
+                  "x": 0,
+                  "y": 1
+                },
+                "blur": 4
+              },
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "HisnU",
+                  "name": "Lock Note Icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "lock",
+                  "library": "$icon-lib",
+                  "fill": "$v2-accent"
+                },
+                {
+                  "type": "text",
+                  "id": "XzAFR",
+                  "name": "Lock Note Text",
+                  "fill": "$v2-ink-soft",
+                  "content": "Locks until session ends · Calls only",
+                  "fontFamily": "$v2-font-ui",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GaloR",
+              "name": "Session Log",
+              "width": "fill_container",
+              "fill": "$v2-paper",
+              "cornerRadius": 18,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#0000000A",
+                "offset": {
+                  "x": 0,
+                  "y": 2
+                },
+                "blur": 8
+              },
+              "layout": "vertical",
+              "gap": 8,
+              "padding": [
+                12,
+                14
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KIkK7",
+                  "name": "Log Header",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yVCym",
+                      "name": "Log Caption",
+                      "fill": "$v2-ink-soft",
+                      "content": "Today’s streak",
+                      "fontFamily": "$v2-font-ui",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "YZDgp",
+                      "name": "Log Count",
+                      "fill": "$v2-ink",
+                      "content": "3 / 4",
+                      "fontFamily": "$v2-font-data",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "qcdJe",
+                  "name": "Log Cells",
+                  "width": "fill_container",
+                  "gap": 6,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 8,
+                      "id": "kOaxC",
+                      "name": "Log Cell 1",
+                      "fill": "$v2-accent",
+                      "width": "fill_container",
+                      "height": 22
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 8,
+                      "id": "fVLqf",
+                      "name": "Log Cell 2",
+                      "fill": "$v2-accent",
+                      "width": "fill_container",
+                      "height": 22
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 8,
+                      "id": "kM9yH",
+                      "name": "Log Cell 3",
+                      "fill": "$v2-accent",
+                      "width": "fill_container",
+                      "height": 22
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 8,
+                      "id": "mwwKZ",
+                      "name": "Log Cell 4",
+                      "fill": "#F3F4F6",
+                      "width": "fill_container",
+                      "height": 22,
+                      "stroke": "$v2-hairline",
+                      "strokeWidth": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg-deep": {
+      "type": "color",
+      "value": "#0A1713"
+    },
+    "bg": {
+      "type": "color",
+      "value": "#0E1F1B"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#142B23"
+    },
+    "surface-soft": {
+      "type": "color",
+      "value": "#1B3A2F"
+    },
+    "ring-track": {
+      "type": "color",
+      "value": "#1E3A31"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#EAF2ED"
+    },
+    "text-muted": {
+      "type": "color",
+      "value": "#93ABA2"
+    },
+    "text-faint": {
+      "type": "color",
+      "value": "#5F7B71"
+    },
+    "accent-focus": {
+      "type": "color",
+      "value": "#FF8A5C"
+    },
+    "on-accent": {
+      "type": "color",
+      "value": "#2A1204"
+    },
+    "accent-break": {
+      "type": "color",
+      "value": "#6FD3A8"
+    },
+    "on-break": {
+      "type": "color",
+      "value": "#082A1C"
+    },
+    "success": {
+      "type": "color",
+      "value": "#7FD8A4"
+    },
+    "font-ui": {
+      "type": "string",
+      "value": "Inter"
+    },
+    "font-mono": {
+      "type": "string",
+      "value": "JetBrains Mono"
+    },
+    "icon-lib": {
+      "type": "string",
+      "value": "Material Symbols Rounded"
+    },
+    "v2-paper": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "v2-panel": {
+      "type": "color",
+      "value": "#F5F7FB"
+    },
+    "v2-ink": {
+      "type": "color",
+      "value": "#111827"
+    },
+    "v2-ink-soft": {
+      "type": "color",
+      "value": "#4B5563"
+    },
+    "v2-muted": {
+      "type": "color",
+      "value": "#9CA3AF"
+    },
+    "v2-hairline": {
+      "type": "color",
+      "value": "#E5E7EB"
+    },
+    "v2-tick": {
+      "type": "color",
+      "value": "#D8DEE8"
+    },
+    "v2-accent": {
+      "type": "color",
+      "value": "#635BFF"
+    },
+    "v2-on-accent": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "v2-accent2": {
+      "type": "color",
+      "value": "#E4572E"
+    },
+    "v2-on-accent2": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "v2-font-ui": {
+      "type": "string",
+      "value": "Geist"
+    },
+    "v2-font-data": {
+      "type": "string",
+      "value": "Geist Mono"
+    },
+    "v2-font-cap": {
+      "type": "string",
+      "value": "Inter"
+    }
+  },
+  "fileToken": "209c14da-ced7-4646-85db-5589141bccbb"
+}

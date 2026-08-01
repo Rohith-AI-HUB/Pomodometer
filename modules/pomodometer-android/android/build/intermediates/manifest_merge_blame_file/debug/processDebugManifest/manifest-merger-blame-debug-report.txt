@@ -1,0 +1,72 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="expo.modules.pomodometerandroid" >
+4
+5    <uses-sdk android:minSdkVersion="24" />
+6
+7    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+7-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:3:3-75
+7-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:3:20-72
+8    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+8-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:4:3-87
+8-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:4:20-84
+9    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+9-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:5:3-75
+9-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:5:20-72
+10    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+10-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:6:3-73
+10-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:6:20-70
+11    <uses-permission android:name="android.permission.WAKE_LOCK" />
+11-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:7:3-66
+11-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:7:20-63
+12    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+12-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:8:3-93
+12-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:8:20-90
+13
+14    <application>
+14-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:10:3-34:17
+15        <service
+15-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:11:5-18:15
+16            android:name="expo.modules.pomodometerandroid.PomodometerService"
+16-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:12:7-41
+17            android:exported="false"
+17-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:13:7-31
+18            android:foregroundServiceType="specialUse" >
+18-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:14:7-49
+19            <property
+19-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:15:7-17:57
+20                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+20-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:16:9-68
+21                android:value="focus session countdown timer" />
+21-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:17:9-54
+22        </service>
+23
+24        <activity
+24-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:20:5-24:69
+25            android:name="expo.modules.pomodometerandroid.LockActivity"
+25-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:21:7-35
+26            android:exported="false"
+26-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:22:7-31
+27            android:launchMode="singleTask"
+27-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:23:7-38
+28            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+28-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:24:7-66
+29
+30        <receiver
+30-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:26:5-33:16
+31            android:name="expo.modules.pomodometerandroid.PomodometerDeviceAdminReceiver"
+31-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:27:7-53
+32            android:exported="true"
+32-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:28:7-30
+33            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+33-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:29:7-64
+34            <meta-data
+34-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:30:7-32:60
+35                android:name="android.app.device_admin"
+35-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:31:9-48
+36                android:resource="@xml/pomodometer_device_admin" />
+36-->C:\Users\rohit\Documents\Rohith-AI-HUB\Pomodometer\modules\pomodometer-android\android\src\main\AndroidManifest.xml:32:9-57
+37        </receiver>
+38    </application>
+39
+40</manifest>

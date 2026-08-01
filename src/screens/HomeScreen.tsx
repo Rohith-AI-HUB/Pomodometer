@@ -29,10 +29,11 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
   const S = useScale();
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { phase, pausedByCall, mode, durationMin, remainingSec, totalSec, streakDone, nextMode, countdown } = session;
+  const { phase, mode, durationMin, remainingSec, totalSec, streakDone, nextMode, countdown } = session;
 
-  const running = phase === "running";
+  const running = phase === "running" || phase === "paused";
   const complete = phase === "complete";
+  const paused = phase === "paused";
   const counting = complete && nextMode != null && countdown > 0;
 
   const readout = running || complete ? formatClock(remainingSec) : formatClock(durationMin * 60);
@@ -106,7 +107,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
           onDragMinutes={running || complete ? undefined : session.setDuration}
           onStep={running || complete ? undefined : (d) => session.setDuration(durationMin + d)}
           locked={running}
-          paused={running && pausedByCall}
+          paused={paused}
         />
         <ModeSelector
           active={mode}

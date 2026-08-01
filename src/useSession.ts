@@ -4,7 +4,7 @@ import { pomodometer } from "./native/pomodometer";
 import { ensurePhoneStatePermission } from "./permissions";
 import type { SessionMode } from "./components/ModeSelector";
 
-export type Phase = "idle" | "running" | "complete";
+export type Phase = "idle" | "running" | "paused" | "complete";
 
 const STREAK_KEY = "pomodometer:streak";
 export const STREAK_TARGET = 4;
@@ -29,7 +29,6 @@ export function formatClock(totalSeconds: number): string {
 
 export function useSession() {
   const [phase, setPhase] = useState<Phase>("idle");
-  const [pausedByCall, setPausedByCall] = useState(false);
   const [mode, setMode] = useState<SessionMode>("focus");
   const [durationMin, setDurationMin] = useState(25);
   const [remainingSec, setRemainingSec] = useState(25 * 60);
@@ -63,8 +62,7 @@ export function useSession() {
     loadStreak();
     const state = pomodometer.getTimerState();
     if (state.running) {
-      setPhase(state.paused ? "running" : "running");
-      setPausedByCall(state.paused);
+      setPhase(state.paused ? "paused" : "running");
       setTotalSec(state.totalSeconds);
       setRemainingSec(state.remainingSeconds);
     }
@@ -73,7 +71,12 @@ export function useSession() {
   useEffect(() => {
     const offs = [
       pomodometer.onTick((e) => setRemainingSec(Math.max(0, e.remaining))),
-      pomodometer.onCallChange((e) => setPausedByCall(e.paused)),
+      pomodometer.onCallChange((e) => {
+        setPhase((p) => {
+          if (p !== "running" && p !== "paused") return p;
+          return e.paused ? "paused" : "running";
+        });
+      }),
       pomodometer.onFinished(() => {
         if (!finishedRef.current) {
           finishedRef.current = true;
@@ -117,7 +120,6 @@ export function useSession() {
       setDurationMin(m);
       setTotalSec(total);
       setRemainingSec(total);
-      setPausedByCall(false);
       setNextMode(null);
       setCountdown(0);
       finishedRef.current = false;
@@ -149,7 +151,6 @@ export function useSession() {
     pomodometer.stopTimer();
     pomodometer.stopLock();
     setPhase("idle");
-    setPausedByCall(false);
     setNextMode(null);
     setCountdown(0);
   }, []);
@@ -175,7 +176,6 @@ export function useSession() {
 
   return {
     phase,
-    pausedByCall,
     mode,
     durationMin,
     remainingSec,

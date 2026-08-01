@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AppState } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pomodometer } from "./native/pomodometer";
 import { ensurePhoneStatePermission } from "./permissions";
@@ -37,9 +38,26 @@ export function useSession() {
   const [ready, setReady] = useState(false);
   const [nextMode, setNextMode] = useState<SessionMode | null>(null);
   const [countdown, setCountdown] = useState(0);
+  const [canLock, setCanLock] = useState(false);
   const finishedRef = useRef(false);
   const modeRef = useRef<SessionMode>("focus");
   const streakRef = useRef(0);
+
+  // Lock task mode only engages silently when the app is a device owner with
+  // strict mode (lock task packages) enabled. On any other device, calling
+  // startLockTask() triggers the system's screen-pinning overlay (the "how to
+  // unpin" instructions), so the lock must be skipped unless it is configured.
+  const refreshLockState = useCallback(() => {
+    setCanLock(pomodometer.isDeviceOwner() && pomodometer.isStrictEnabled());
+  }, []);
+
+  useEffect(() => {
+    refreshLockState();
+    const sub = AppState.addEventListener("change", (state) => {
+      if (state === "active") refreshLockState();
+    });
+    return () => sub.remove();
+  }, [refreshLockState]);
 
   const loadStreak = useCallback(async () => {
     try {
@@ -129,12 +147,12 @@ export function useSession() {
         return;
       }
       pomodometer.startTimer(total, mo.toUpperCase());
-      if (mo === "focus") {
+      if (mo === "focus" && canLock) {
         pomodometer.startLock();
       }
       setPhase("running");
     },
-    [durationMin, mode]
+    [durationMin, mode, canLock]
   );
 
   useEffect(() => {
@@ -184,6 +202,7 @@ export function useSession() {
     ready,
     nextMode,
     countdown,
+    canLock,
     start,
     end,
     selectMode,

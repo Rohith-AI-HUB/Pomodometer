@@ -307,10 +307,23 @@ export function Dial({ readout, unit, minutes, onDragMinutes, onStep, locked, pa
         pointerEvents="none"
         style={[
           styles.readoutValue,
-          { top: 120 * S, transform: [{ scale: readoutAnim }] },
+          {
+            top: 120 * S,
+            left: (CX - (RING_R - RING_STROKE)) * S,
+            width: (RING_R - RING_STROKE) * 2 * S,
+            transform: [{ scale: readoutAnim }],
+          },
         ]}
       >
-        <Text style={[styles.readoutText, { fontSize: 62 * S }]}>{readout}</Text>
+        <Text
+          allowFontScaling={false}
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.5}
+          style={[styles.readoutText, { fontSize: 52 * S }]}
+        >
+          {readout}
+        </Text>
       </Animated.View>
       <Text style={[styles.readoutUnit, { top: 204 * S, fontSize: 10 * S, letterSpacing: 1.5 * S }]}>
         {unit}

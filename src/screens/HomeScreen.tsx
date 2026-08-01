@@ -29,7 +29,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
   const S = useScale();
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { phase, mode, durationMin, remainingSec, totalSec, streakDone, nextMode, countdown } = session;
+  const { phase, mode, durationMin, remainingSec, totalSec, streakDone, nextMode, countdown, canLock } = session;
 
   const running = phase === "running" || phase === "paused";
   const complete = phase === "complete";
@@ -46,7 +46,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
       : `${MODE_LABEL[mode].toUpperCase()} · BREAK`;
   const frac = running || complete ? remainingSec / totalSec : (durationMin - 5) / 55;
 
-  const lockedNow = running && mode === "focus";
+  const lockedNow = running && mode === "focus" && canLock;
   const caption = counting
     ? `Next: ${MODE_LABEL[nextMode!]} in ${countdown}s`
     : running
@@ -66,7 +66,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
     : counting
       ? `${countdown}s to ${MODE_LABEL[nextMode!].toLowerCase()}`
       : `${durationMin} min target`;
-  const revLabel = running ? (lockedNow ? "SESSION LIVE" : "BREAK TIME") : counting ? "AUTO NEXT" : "LOCK READY";
+  const revLabel = running ? (mode === "focus" ? "SESSION LIVE" : "BREAK TIME") : counting ? "AUTO NEXT" : "LOCK READY";
   const logCount = `${streakDone} / ${STREAK_TARGET}`;
 
   const holdStart = () => {
@@ -116,7 +116,7 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
         />
         {running ? (
           <PrimaryCTA
-            label={lockedNow ? "Hold 3s to End Session" : "Hold 3s to End Break"}
+            label={mode === "focus" ? "Hold 3s to End Session" : "Hold 3s to End Break"}
             icon="stop"
             color="accent2"
             onPressIn={holdStart}

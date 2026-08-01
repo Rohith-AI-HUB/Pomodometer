@@ -82,7 +82,18 @@ class PomodometerModule : Module() {
     Function("stopLock") {
       val activity = appContext.currentActivity
       if (activity != null) {
-        Handler(Looper.getMainLooper()).post { activity.stopLockTask() }
+        // stopLockTask() throws SecurityException if the app is not currently in
+        // lock task mode, which would crash the app. Only attempt to unlock when
+        // lock task mode is actually active.
+        if (isInLockTaskMode()) {
+          Handler(Looper.getMainLooper()).post {
+            try {
+              activity.stopLockTask()
+            } catch (_: SecurityException) {
+              // Not in lock task mode; nothing to unlock.
+            }
+          }
+        }
       } else {
         launchLockActivity(LockActivity.ACTION_STOP_LOCK)
       }
@@ -220,6 +231,12 @@ class PomodometerModule : Module() {
       if (ctx == null) return ComponentName("", "")
       return ComponentName(ctx, PomodometerDeviceAdminReceiver::class.java)
     }
+
+  private fun isInLockTaskMode(): Boolean {
+    val ctx = appContext.reactContext ?: return false
+    val am = ctx.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+    return am != null && am.lockTaskModeState != ActivityManager.LOCK_TASK_MODE_NONE
+  }
 
   private fun startObserving() {
     observingCount++

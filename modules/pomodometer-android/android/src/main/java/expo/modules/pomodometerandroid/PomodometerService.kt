@@ -110,7 +110,12 @@ class PomodometerService : Service() {
 
   private fun startForegroundCompat(notification: Notification) {
     if (Build.VERSION.SDK_INT >= 29) {
-      startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+      if (Build.VERSION.SDK_INT >= 34) {
+        startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+      } else {
+        startForeground(NOTIFICATION_ID, notification)
+        startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE)
+      }
     } else {
       startForeground(NOTIFICATION_ID, notification)
     }

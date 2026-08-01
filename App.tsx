@@ -21,8 +21,11 @@ export default function App() {
   }, []);
 
   const startFromSetup = useCallback(() => {
-    void markSetupComplete();
+    // Update in-memory state too, otherwise `wizard` stays true and the
+    // setup screen never gives way to the home screen in the same session.
+    setPerm((p) => (p ? { ...p, setupCompleted: true, completedAt: Date.now() } : p));
     setScreen("home");
+    void markSetupComplete();
     void session.start();
   }, [session]);
 

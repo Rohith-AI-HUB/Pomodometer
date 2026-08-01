@@ -3,16 +3,13 @@ import { AppState } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pomodometer } from "./native/pomodometer";
 import { ensurePhoneStatePermission } from "./permissions";
-import { snapToSequence } from "./config";
-import type { SessionMode } from "./components/ModeSelector";
+import { FOCUS_DEFAULT_MINUTES, clampMinutes } from "./config";
+import { playFinishSound, stopFinishSound } from "./sounds";
 
 export type Phase = "idle" | "running" | "paused" | "complete";
 
 const STREAK_KEY = "pomodometer:streak";
 export const STREAK_TARGET = 4;
-export const AUTO_COUNTDOWN_SECONDS = 5;
-// Dial value 0 ≡ 60 minutes on the 60-minute clock framework.
-const MODE_MINUTES: Record<SessionMode, number> = { focus: 25, short: 5, long: 15 };
 
 interface Streak {
   date: string;
@@ -32,25 +29,24 @@ export function formatClock(totalSeconds: number): string {
 
 export function useSession() {
   const [phase, setPhase] = useState<Phase>("idle");
-  const [mode, setMode] = useState<SessionMode>("focus");
-  const [durationMin, setDurationMin] = useState(25);
-  const [remainingSec, setRemainingSec] = useState(25 * 60);
-  const [totalSec, setTotalSec] = useState(25 * 60);
+  const [durationMin, setDurationMin] = useState(FOCUS_DEFAULT_MINUTES);
+  const [remainingSec, setRemainingSec] = useState(FOCUS_DEFAULT_MINUTES * 60);
+  const [totalSec, setTotalSec] = useState(FOCUS_DEFAULT_MINUTES * 60);
   const [streakDone, setStreakDone] = useState(0);
   const [ready, setReady] = useState(false);
-  const [nextMode, setNextMode] = useState<SessionMode | null>(null);
-  const [countdown, setCountdown] = useState(0);
   const [canLock, setCanLock] = useState(false);
   const finishedRef = useRef(false);
-  const modeRef = useRef<SessionMode>("focus");
   const streakRef = useRef(0);
+  // Remembers the last custom focus duration so a finished session can be
+  // restarted with the same length the user chose, not the default.
+  const focusDurationRef = useRef(FOCUS_DEFAULT_MINUTES);
 
-  // Lock task mode only engages silently when the app is a device owner with
-  // strict mode (lock task packages) enabled. On any other device, calling
-  // startLockTask() triggers the system's screen-pinning overlay (the "how to
-  // unpin" instructions), so the lock must be skipped unless it is configured.
+  // Every session pins the screen on the Android build: lock task mode /
+  // screen pinning is engaged for the whole session and released by the
+  // official "hold to end" button (stopLockTask). The one-time "how to
+  // escape" hint shown by some OEMs is expected.
   const refreshLockState = useCallback(() => {
-    setCanLock(pomodometer.isDeviceOwner() && pomodometer.isStrictEnabled());
+    setCanLock(pomodometer.available);
   }, []);
 
   useEffect(() => {
@@ -85,6 +81,9 @@ export function useSession() {
       setPhase(state.paused ? "paused" : "running");
       setTotalSec(state.totalSeconds);
       setRemainingSec(state.remainingSeconds);
+      // The app process may have been recreated while a session was active
+      // (crash / OS reclaim). Re-engage the screen pin immediately.
+      if (pomodometer.available) pomodometer.startLock();
     }
   }, [loadStreak]);
 
@@ -102,8 +101,6 @@ export function useSession() {
           finishedRef.current = true;
           setRemainingSec(0);
           setPhase("complete");
-          setNextMode(nextModeFor(modeRef.current));
-          setCountdown(AUTO_COUNTDOWN_SECONDS);
         }
       }),
     ];
@@ -112,119 +109,72 @@ export function useSession() {
 
   useEffect(() => {
     if (phase === "complete") {
-      if (modeRef.current === "focus") {
-        streakRef.current = Math.min(streakRef.current + 1, STREAK_TARGET);
-        const done = streakRef.current;
-        setStreakDone(done);
-        const persistStreak = async () => {
-          try {
-            await AsyncStorage.setItem(
-              STREAK_KEY,
-              JSON.stringify({ date: todayKey(), done } satisfies Streak)
-            );
-          } catch {}
-        };
-        void persistStreak();
-      }
+      streakRef.current = Math.min(streakRef.current + 1, STREAK_TARGET);
+      const done = streakRef.current;
+      setStreakDone(done);
+      const persistStreak = async () => {
+        try {
+          await AsyncStorage.setItem(
+            STREAK_KEY,
+            JSON.stringify({ date: todayKey(), done } satisfies Streak)
+          );
+        } catch {}
+      };
+      void persistStreak();
       pomodometer.stopLock();
+      // Ring until the user starts the next session, skips, or ends.
+      playFinishSound();
+    } else {
+      stopFinishSound();
     }
   }, [phase]);
 
-  const start = useCallback(
-    async (min?: number, targetMode?: SessionMode) => {
-      const m = min ?? durationMin;
-      const mo = targetMode ?? mode;
-      const total = m * 60;
-      modeRef.current = mo;
-      setMode(mo);
-      setDurationMin(m);
-      setTotalSec(total);
-      setRemainingSec(total);
-      setNextMode(null);
-      setCountdown(0);
-      finishedRef.current = false;
-      const phoneOk = await ensurePhoneStatePermission();
-      if (!phoneOk) {
-        setPhase("idle");
-        return;
-      }
-      // Read the native state synchronously rather than relying on the
-      // (possibly stale) `canLock` state: the user may have just toggled
-      // strict mode in Setup, and `canLock` is only refreshed on mount or
-      // when the app returns to the foreground.
-      const lockReady = pomodometer.isDeviceOwner() && pomodometer.isStrictEnabled();
-      setCanLock(lockReady);
-      pomodometer.startTimer(total, mo.toUpperCase());
-      if (mo === "focus" && lockReady) {
-        pomodometer.startLock();
-      }
-      setPhase("running");
-    },
-    [durationMin, mode]
-  );
-
-  useEffect(() => {
-    if (phase !== "complete" || countdown <= 0 || !nextMode) return;
-    if (countdown === 1) {
-      void start(MODE_MINUTES[nextMode], nextMode);
+  const start = useCallback(async (min?: number) => {
+    const m = clampMinutes(min ?? focusDurationRef.current);
+    const total = m * 60;
+    focusDurationRef.current = m;
+    setDurationMin(m);
+    setTotalSec(total);
+    setRemainingSec(total);
+    finishedRef.current = false;
+    const phoneOk = await ensurePhoneStatePermission();
+    if (!phoneOk) {
+      setPhase("idle");
       return;
     }
-    const t = setTimeout(() => setCountdown((c) => c - 1), 1000);
-    return () => clearTimeout(t);
-  }, [phase, countdown, nextMode, start]);
+    // Screen pinning always engages on the Android build; the native module
+    // exists whenever we are running on the dev client (not Expo Go).
+    const lockReady = pomodometer.available;
+    setCanLock(lockReady);
+    pomodometer.startTimer(total, "FOCUS");
+    if (lockReady) {
+      pomodometer.startLock();
+    }
+    setPhase("running");
+  }, []);
 
   const end = useCallback(() => {
     pomodometer.stopTimer();
     pomodometer.stopLock();
     setPhase("idle");
-    setNextMode(null);
-    setCountdown(0);
-  }, []);
-
-  const selectMode = useCallback(
-    (m: SessionMode) => {
-      modeRef.current = m;
-      setMode(m);
-      setDurationMin(MODE_MINUTES[m]);
-    },
-    []
-  );
-
-  const skipNext = useCallback(() => {
-    setNextMode(null);
-    setCountdown(0);
-    setPhase("idle");
   }, []);
 
   const setDuration = useCallback((min: number) => {
-    setDurationMin(snapToSequence(min));
+    const m = clampMinutes(min);
+    focusDurationRef.current = m;
+    setDurationMin(m);
   }, []);
 
   return {
     phase,
-    mode,
     durationMin,
     remainingSec,
     totalSec,
     streakDone,
     ready,
-    nextMode,
-    countdown,
     canLock,
     start,
     end,
-    selectMode,
-    skipNext,
     setDuration,
   };
 }
-
-function nextModeFor(finished: SessionMode): SessionMode {
-  if (finished === "focus") {
-    cycleCountRef.count += 1;
-    return cycleCountRef.count % 4 === 0 ? "long" : "short";
-  }
-  return "focus";
-}
-
-const cycleCountRef: { count: number } = { count: 0 };

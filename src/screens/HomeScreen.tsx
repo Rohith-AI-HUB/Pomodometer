@@ -4,13 +4,12 @@ import { colors, fonts, layout } from "../theme";
 import { useScale } from "../scale";
 import { BrandHeader } from "../components/BrandHeader";
 import { Dial } from "../components/Dial";
-import { ModeSelector } from "../components/ModeSelector";
+import { DurationInput } from "../components/DurationInput";
 import { PrimaryCTA } from "../components/PrimaryCTA";
 import { LockNote } from "../components/LockNote";
 import { SessionLog } from "../components/SessionLog";
 import { STREAK_TARGET, formatClock, useSession } from "../useSession";
 import { pomodometer } from "../native/pomodometer";
-import type { SessionMode } from "../components/ModeSelector";
 
 interface Props {
   onOpenSetup: () => void;
@@ -19,12 +18,6 @@ interface Props {
 
 const HOLD_MS = 3000;
 
-const MODE_LABEL: Record<SessionMode, string> = {
-  focus: "Focus",
-  short: "Short break",
-  long: "Long break",
-};
-
 export function HomeScreen({ onOpenSetup, session }: Props) {
   const S = useScale();
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -32,43 +25,27 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
   // on the (newly rendered) Start button right after the session ends.
   const suppressStartUntil = useRef(0);
 
-  const { phase, mode, durationMin, remainingSec, totalSec, streakDone, nextMode, countdown, canLock } = session;
+  const { phase, durationMin, remainingSec, totalSec, streakDone, canLock } = session;
 
   const running = phase === "running" || phase === "paused";
   const complete = phase === "complete";
   const paused = phase === "paused";
-  const counting = complete && nextMode != null && countdown > 0;
+  // Drag-to-adjust and the duration editor are exclusive to the Focus setup
+  // screen; a running or finished session locks the dial.
+  const editable = !running && !complete;
 
   const readout = running || complete ? formatClock(remainingSec) : formatClock(durationMin * 60);
-  const unit = running
-    ? mode === "focus"
-      ? "FOCUS · REMAINING"
-      : `${MODE_LABEL[mode].toUpperCase()} · REMAINING`
-    : mode === "focus"
-      ? "FOCUS · CUSTOM MODE"
-      : `${MODE_LABEL[mode].toUpperCase()} · BREAK`;
+  const unit = running ? "FOCUS · REMAINING" : "FOCUS · CUSTOM MODE";
 
-  const lockedNow = running && mode === "focus" && canLock;
-  const caption = counting
-    ? `Next: ${MODE_LABEL[nextMode!]} in ${countdown}s`
-    : running
-      ? lockedNow
-        ? "Phone locked · Calls can still be answered"
-        : "Free to use your phone"
-      : "Drag the ring to adjust duration";
-  const subLeft = running
-    ? `${MODE_LABEL[mode]} running`
-    : counting
-      ? "Break incoming"
-      : mode === "focus"
-        ? "Focus session setup"
-        : `${MODE_LABEL[mode]} setup`;
-  const subRight = running
-    ? `${formatClock(remainingSec)} left`
-    : counting
-      ? `${countdown}s to ${MODE_LABEL[nextMode!].toLowerCase()}`
-      : `${durationMin} min target`;
-  const revLabel = running ? (mode === "focus" ? "SESSION LIVE" : "BREAK TIME") : counting ? "AUTO NEXT" : "LOCK READY";
+  const lockedNow = running && canLock;
+  const caption = running
+    ? lockedNow
+      ? "Screen pinned · calls still work"
+      : "Free to use your phone"
+    : "Drag the ring, type, or slide — min 1 minute";
+  const subLeft = running ? "Focus running" : "Focus session setup";
+  const subRight = running ? `${formatClock(remainingSec)} left` : `${durationMin} min target`;
+  const revLabel = running ? "SESSION LIVE" : "LOCK READY";
   const logCount = `${streakDone} / ${STREAK_TARGET}`;
 
   const holdStart = () => {
@@ -108,27 +85,21 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
           unit={unit}
           minutes={durationMin}
           progressFraction={running || complete ? remainingSec / totalSec : undefined}
-          onDragMinutes={running || complete ? undefined : session.setDuration}
-          onStep={running || complete ? undefined : session.setDuration}
+          onDragMinutes={editable ? session.setDuration : undefined}
+          onStep={editable ? session.setDuration : undefined}
           locked={running}
           paused={paused}
         />
-        <ModeSelector
-          active={mode}
-          disabled={running}
-          onSelect={session.selectMode}
-        />
+        {editable && <DurationInput minutes={durationMin} onChange={session.setDuration} />}
         {running ? (
           <PrimaryCTA
             key="stop"
-            label={mode === "focus" ? "Hold 3s to End Session" : "Hold 3s to End Break"}
+            label="Hold 3s to End Session"
             icon="stop"
             color="accent2"
             onPressIn={holdStart}
             onPressOut={holdCancel}
           />
-        ) : counting ? (
-          <PrimaryCTA key="skip" label={`Skip · ${MODE_LABEL[nextMode!]}`} icon="stop" color="accent2" onPress={session.skipNext} />
         ) : (
           <PrimaryCTA
             key="start"
@@ -144,11 +115,9 @@ export function HomeScreen({ onOpenSetup, session }: Props) {
           text={
             running
               ? lockedNow
-                ? "Hold 3s to unlock early · Calls still work"
+                ? "Hold 3s to end · calls still work"
                 : "Free to use your phone · ends automatically"
-              : counting
-                ? "Auto-starts in a few seconds — tap Skip to stay"
-                : "Locks until session ends · Calls only"
+              : "Sessions pin the screen until you end them"
           }
         />
         <SessionLog caption="Today's streak" count={logCount} done={streakDone} total={STREAK_TARGET} />

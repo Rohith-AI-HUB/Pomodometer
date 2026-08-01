@@ -268,6 +268,12 @@ class PomodometerModule : Module() {
    * briefly in case the activity is still resuming (e.g. right after the app was
    * brought to the foreground). Stops once lock task mode engages, or after the
    * retry budget is exhausted, or if the platform rejects the request.
+   *
+   * Every session pins unconditionally. On devices without the device-owner /
+   * lock-task-package whitelist this engages ordinary Android screen pinning,
+   * which may show the one-time "how to escape app pinning" hint — that is
+   * intended; the in-app "hold to end" button (stopLockTask) is the official
+   * way out of a session.
    */
   private fun tryStartLockTask(retries: Int) {
     if (retries <= 0 || isInLockTaskMode()) return

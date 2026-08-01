@@ -12,7 +12,13 @@ import Svg, { Circle } from "react-native-svg";
 import { colors, fonts, radii, shadows } from "../theme";
 import { useScale } from "../scale";
 import { MaterialIcons } from "./icons";
-import { DIAL_SEQUENCE, minutesFor, nextInSequence, sequenceAngle } from "../config";
+import {
+  DIAL_MAX_MINUTES,
+  dialFractionFor,
+  dialLabelAngle,
+  minutesForDialFraction,
+  stepDialMinutes,
+} from "../config";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -35,30 +41,19 @@ const BUTTON_GAP = 14;
 
 const TICK_ANGLES = Array.from({ length: 12 }, (_, i) => i * 30);
 
+// 1 → 60 minutes around the dial; the handle sweeps one full clockwise
+// rotation as the duration goes from 1 minute (top) to 60 minutes (top).
 export function fractionFromMinutes(min: number): number {
-  // 60-minute clock: the handle angle is proportional to the clock value,
-  // and 0 ≡ 60 (both sit at the top of the clock).
-  return Math.min(Math.max((min % 60) / 60, 0), 1);
+  return dialFractionFor(min);
 }
 
 export function minutesFromFraction(f: number): number {
-  const angle = (((f % 1) + 1) % 1) * 360;
-  let best = DIAL_SEQUENCE[0];
-  let bestDist = Infinity;
-  for (const v of DIAL_SEQUENCE) {
-    const target = sequenceAngle(v);
-    const d = Math.min(Math.abs(angle - target), 360 - Math.abs(angle - target));
-    if (d < bestDist) {
-      bestDist = d;
-      best = v;
-    }
-  }
-  return minutesFor(best);
+  return minutesForDialFraction(((f % 1) + 1) % 1);
 }
 
-const LABELS: { text: string; angle: number }[] = DIAL_SEQUENCE.map((v) => ({
+const LABELS: { text: string; angle: number }[] = [1, 15, 30, 45, DIAL_MAX_MINUTES].map((v) => ({
   text: String(v),
-  angle: sequenceAngle(v),
+  angle: dialLabelAngle(v),
 }));
 
 function polar(angleDeg: number, radius: number): { x: number; y: number } {
@@ -117,6 +112,10 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
     }).start();
   };
 
+  // The pan responder lives on a full-card overlay (below the step buttons),
+  // so `locationX/locationY` are always relative to the card itself — child
+  // views (labels, handle, readout) can never cause coordinate jumps. Refusing
+  // termination keeps the ScrollView from stealing the gesture mid-drag.
   const pan = useMemo(
     () =>
       PanResponder.create({
@@ -128,7 +127,10 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
           return Math.hypot(dx, dy) <= RING_R + 40;
         },
         onMoveShouldSetPanResponder: () => false,
-        onPanResponderGrant: () => {
+        onPanResponderTerminationRequest: () => false,
+        onPanResponderGrant: (evt) => {
+          const { locationX, locationY } = evt.nativeEvent;
+          const min = minutesFromPoint(locationX / S, locationY / S);
           draggingRef.current = true;
           Animated.spring(handleScale, {
             toValue: 1.18,
@@ -136,6 +138,8 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
             tension: 100,
             useNativeDriver: false,
           }).start();
+          progress.setValue(fractionFromMinutes(min));
+          onDragMinutes?.(min);
         },
         onPanResponderMove: (evt) => {
           const { locationX, locationY } = evt.nativeEvent;
@@ -168,7 +172,10 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
     }).start();
   }, [minutes, progressFraction, progress]);
 
+  // Only pulse the readout when the value is not being dragged — re-triggering
+  // the scale animation on every drag tick is what made the dial feel glitchy.
   useEffect(() => {
+    if (draggingRef.current) return;
     Animated.sequence([
       Animated.timing(readoutAnim, {
         toValue: 1.04,
@@ -194,7 +201,6 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
         shadows.card,
         { width: CARD_W * S, height: CARD_H * S, borderRadius: radii.dial * S },
       ]}
-      {...pan.panHandlers}
     >
       <View
         style={[
@@ -257,6 +263,7 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
         return (
           <View
             key={l.text}
+            pointerEvents="none"
             style={[
               styles.labelBox,
               { left: (p.x - 20) * S, top: (p.y - 11) * S, width: 40 * S, height: 22 * S },
@@ -289,10 +296,12 @@ export function Dial({ readout, unit, minutes, progressFraction, onDragMinutes, 
         ]}
       />
 
+      {onDragMinutes && <View style={StyleSheet.absoluteFill} {...pan.panHandlers} />}
+
       {onStep && (
         <>
-          <StepButton icon="remove" onPress={() => onStep(nextInSequence(minutes, -1))} position="left" />
-          <StepButton icon="add" onPress={() => onStep(nextInSequence(minutes, 1))} position="right" />
+          <StepButton icon="remove" onPress={() => onStep(stepDialMinutes(minutes, -1))} position="left" />
+          <StepButton icon="add" onPress={() => onStep(stepDialMinutes(minutes, 1))} position="right" />
         </>
       )}
 
